@@ -1,0 +1,16 @@
+{
+  "name": "comptia-study",
+  "private": true,
+  "scripts": {
+    "dev:desktop": "turbo run dev --filter=@comptia-study/desktop",
+    "dev:web": "turbo run dev --filter=@comptia-study/web",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

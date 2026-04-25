@@ -1,0 +1,37 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicholasio/tauri-v2-schema-generator/main/schemas/tauri.conf.schema.json",
+  "productName": "CompTIA A+ Study",
+  "version": "0.1.0",
+  "identifier": "com.comptia-study.app",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "CompTIA A+ Study",
+        "width": 900,
+        "height": 700,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
