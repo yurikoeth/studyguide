@@ -1,0 +1,52 @@
+name: release
+
+# Push a tag like v0.2.0 to build the Windows installer and publish it as a
+# GitHub release. Also runnable by hand from the Actions tab.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Test shared logic
+        run: pnpm --filter @comptia-study/shared test
+
+      - name: Build shared package (type output needed by the app)
+        run: pnpm --filter @comptia-study/shared build
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: apps/desktop
+          tagName: ${{ github.ref_name }}
+          releaseName: StudyGuide ${{ github.ref_name }}
+          releaseBody: Windows installer (per-user NSIS setup). See the README for what the app does.
+          releaseDraft: false
+          prerelease: false

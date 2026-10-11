@@ -21,7 +21,7 @@ Everything is stored locally in a SQLite database. Nothing is uploaded except th
 
 **Requirements:** Windows 10 or 11, and an [Anthropic API key](https://console.anthropic.com) if you want generated questions. Everything else works without one.
 
-1. Install the latest `StudyGuide_x64-setup.exe` (per-user install, no admin prompt), or build it yourself as below.
+1. Download `StudyGuide_<version>_x64-setup.exe` from the [latest release](https://github.com/yurikoeth/studyguide/releases/latest) and run it (per-user install, no admin prompt), or build it yourself as below.
 2. Open Settings and paste your API key.
 3. On the Course tab, mark a video watched and press **Generate questions**.
 4. Go to the Study tab and start reviewing.
@@ -38,6 +38,8 @@ pnpm run build:app     # release exe + NSIS installer
 ```
 
 Outputs land in `apps/desktop/src-tauri/target/release/` (exe) and `.../bundle/nsis/` (installer). You need Node 20+, pnpm 9, and a Rust toolchain.
+
+Releases are built by GitHub Actions: push a tag like `v0.2.0` and the workflow in `.github/workflows/release.yml` builds the installer and publishes it.
 
 ## How it is put together
 

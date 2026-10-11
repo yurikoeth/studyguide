@@ -52,6 +52,7 @@ pnpm run test                # 54 tests: SM-2, XP, streaks, achievements, AI par
 # Desktop
 pnpm run dev                 # from root: Tauri dev window (Vite on http://localhost:3000)
 pnpm run build:app           # from root: release exe + NSIS installer
+# Release: git tag vX.Y.Z && git push --tags  -> .github/workflows/release.yml publishes the installer
 # or from apps/desktop/: npx vite (browser only), npx tauri dev, npx tauri build
 # Outputs: apps/desktop/src-tauri/target/release/comptia-study.exe
 #          apps/desktop/src-tauri/target/release/bundle/nsis/*.exe
