@@ -8,9 +8,9 @@ interface Props {
 
 const RATING_BUTTONS: { rating: ReviewRating; label: string; color: string }[] = [
   { rating: 1, label: "Wrong", color: "bg-red-600 hover:bg-red-500" },
-  { rating: 3, label: "Hard", color: "bg-amber-600 hover:bg-amber-500" },
+  { rating: 3, label: "Hard", color: "bg-slate-700 hover:bg-slate-600" },
   { rating: 4, label: "Good", color: "bg-green-600 hover:bg-green-500" },
-  { rating: 5, label: "Easy", color: "bg-indigo-600 hover:bg-indigo-500" },
+  { rating: 5, label: "Easy", color: "bg-indigo-600 hover:bg-indigo-500 text-accent-fg" },
 ];
 
 export function AnswerFeedback({ question }: Props) {

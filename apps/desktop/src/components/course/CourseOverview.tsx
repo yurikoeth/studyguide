@@ -18,7 +18,7 @@ export function CourseOverview() {
       {/* Course progress bar */}
       <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
         <div
-          className="h-full bg-green-500 rounded-full transition-all duration-300"
+          className="h-full bg-indigo-500 rounded-full transition-all duration-300"
           style={{ width: `${(watchedCount / TOTAL_VIDEOS) * 100}%` }}
         />
       </div>

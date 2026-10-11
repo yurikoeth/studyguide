@@ -1,7 +1,10 @@
+import type { ReactNode } from "react";
+import { FlameIcon, StarIcon } from "../icons";
 import { useUserStore } from "../../stores/user-store";
 import { useStudyStore } from "../../stores/study-store";
 import { getXPToNextLevel } from "@comptia-study/shared/gamification";
 import { DOMAINS_220_1201, TOTAL_VIDEOS } from "@comptia-study/shared/data";
+import { PlanCard } from "./PlanCard";
 
 export function Dashboard() {
   const {
@@ -17,6 +20,8 @@ export function Dashboard() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <h2 className="text-2xl font-bold">Dashboard</h2>
+
+      <PlanCard />
 
       {/* Level & XP */}
       <div className="bg-slate-800 rounded-xl p-6">
@@ -48,8 +53,8 @@ export function Dashboard() {
       <div className="grid grid-cols-2 gap-4">
         <StatCard label="Cards Reviewed" value={totalCardsReviewed} />
         <StatCard label="Accuracy" value={`${accuracy}%`} />
-        <StatCard label="Current Streak" value={`${currentStreak} days`} icon="🔥" />
-        <StatCard label="Longest Streak" value={`${longestStreak} days`} icon="⭐" />
+        <StatCard label="Current Streak" value={`${currentStreak} days`} icon={<FlameIcon className="w-5 h-5" />} />
+        <StatCard label="Longest Streak" value={`${longestStreak} days`} icon={<StarIcon className="w-5 h-5" />} />
       </div>
 
       {/* Course progress */}
@@ -58,7 +63,7 @@ export function Dashboard() {
         <div className="flex items-center gap-3 mb-4">
           <div className="flex-1 h-3 bg-slate-700 rounded-full overflow-hidden">
             <div
-              className="h-full bg-green-500 rounded-full transition-all"
+              className="h-full bg-indigo-500 rounded-full transition-all"
               style={{ width: `${(videosWatched / TOTAL_VIDEOS) * 100}%` }}
             />
           </div>
@@ -71,6 +76,7 @@ export function Dashboard() {
         <div className="space-y-2">
           {DOMAINS_220_1201.map((domain) => {
             const correct = domainCorrectCounts[domain.id] ?? 0;
+            const mastered = correct >= 50;
             return (
               <div key={domain.id} className="flex items-center gap-2 text-sm">
                 <span className="w-48 text-slate-400 truncate">
@@ -78,12 +84,14 @@ export function Dashboard() {
                 </span>
                 <div className="flex-1 h-2 bg-slate-700 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-indigo-500 rounded-full"
+                    className={`h-full rounded-full ${mastered ? "bg-amber-400" : "bg-indigo-500"}`}
                     style={{ width: `${Math.min((correct / 50) * 100, 100)}%` }}
                   />
                 </div>
-                <span className="text-xs text-slate-400 w-12 text-right">
-                  {correct}/50
+                <span
+                  className={`text-xs w-20 text-right ${mastered ? "text-amber-400 font-semibold" : "text-slate-400"}`}
+                >
+                  {mastered ? "Mastered ✓" : `${correct}/50`}
                 </span>
               </div>
             );
@@ -101,13 +109,13 @@ function StatCard({
 }: {
   label: string;
   value: string | number;
-  icon?: string;
+  icon?: ReactNode;
 }) {
   return (
     <div className="bg-slate-800 rounded-xl p-4">
       <p className="text-sm text-slate-400">{label}</p>
       <p className="text-2xl font-bold mt-1">
-        {icon && <span className="mr-1">{icon}</span>}
+        {icon && <span className="inline-flex align-[-3px] mr-2 text-slate-300">{icon}</span>}
         {value}
       </p>
     </div>

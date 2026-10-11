@@ -75,7 +75,7 @@ export function QuestionCard({ question }: Props) {
         <button
           onClick={revealAnswer}
           disabled={!selectedChoice}
-          className="w-full py-3 bg-indigo-600 rounded-lg font-semibold hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full py-3 bg-indigo-600 text-accent-fg rounded-lg font-semibold hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Check Answer
         </button>

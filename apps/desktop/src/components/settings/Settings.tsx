@@ -1,4 +1,6 @@
 import { useUserStore } from "../../stores/user-store";
+import { AppearanceSettings } from "./AppearanceSettings";
+import { StudyPlanSettings } from "./StudyPlanSettings";
 
 export function Settings() {
   const settings = useUserStore((s) => s.settings);
@@ -34,6 +36,10 @@ export function Settings() {
           />
         </label>
       </div>
+
+      <StudyPlanSettings />
+
+      <AppearanceSettings />
 
       {/* Study preferences */}
       <div className="bg-slate-800 rounded-xl p-6 space-y-4">

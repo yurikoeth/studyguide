@@ -1,35 +1,187 @@
 @import "tailwindcss";
 
-:root {
-  --color-primary: #6366f1;
-  --color-primary-light: #818cf8;
-  --color-primary-dark: #4f46e5;
-  --color-success: #22c55e;
-  --color-danger: #ef4444;
-  --color-warning: #f59e0b;
-  --color-xp: #f59e0b;
-  --color-streak: #ef4444;
+/*
+ * Monochrome theme: pure black surfaces, white accents.
+ * The components use Tailwind's slate / indigo / amber utilities, so instead of
+ * touching every class we remap those palettes here. Green and red are kept for
+ * correct / wrong answer feedback only.
+ */
+@theme {
+  --font-sans: "Inter Variable", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* Surfaces + text derive from the user's background (--bg) and its contrasting
+     foreground (--fg), so any background colour keeps panels, borders and text readable.
+     slate-800 follows --panel so it can go translucent over a wallpaper. */
+  --color-black: var(--bg);
+  --color-white: var(--fg);
+  --color-slate-900: var(--bg);
+  --color-slate-800: var(--panel);
+  --color-slate-700: color-mix(in srgb, var(--fg) 9%, var(--bg));
+  --color-slate-600: color-mix(in srgb, var(--fg) 16%, var(--bg));
+  --color-slate-500: color-mix(in srgb, var(--fg) 34%, var(--bg));
+  --color-slate-400: color-mix(in srgb, var(--fg) 62%, var(--bg));
+  --color-slate-300: color-mix(in srgb, var(--fg) 82%, var(--bg));
+  --color-slate-200: color-mix(in srgb, var(--fg) 92%, var(--bg));
+  --color-slate-100: color-mix(in srgb, var(--fg) 97%, var(--bg));
+
+  /* primary accent (indigo -> user accent, white by default) */
+  --color-indigo-300: color-mix(in srgb, var(--accent) 75%, #ffffff);
+  --color-indigo-400: var(--accent);
+  --color-indigo-500: color-mix(in srgb, var(--accent) 85%, #000000);
+  --color-indigo-600: var(--accent);
+  --color-indigo-900: color-mix(in srgb, var(--accent) 18%, #000000);
+  --color-accent-fg: var(--accent-fg);
+
+  /* xp / mastery accent follows the same accent */
+  --color-amber-400: var(--accent);
+  --color-amber-500: color-mix(in srgb, var(--accent) 85%, #000000);
+  --color-amber-900: color-mix(in srgb, var(--accent) 18%, #000000);
+
+  /* keep feedback colours but calm them down */
+  --color-green-400: #8ee6b0;
+  --color-green-500: #5ad48a;
+  --color-green-600: #3fbf74;
+  --color-green-700: #2f7f52;
+  --color-green-900: #0f2a1b;
+  --color-emerald-400: #8ee6b0;
+  --color-emerald-600: #3fbf74;
+  --color-red-300: #ffb4b4;
+  --color-red-400: #ff8a8a;
+  --color-red-500: #f05d5d;
+  --color-red-600: #d94848;
+  --color-red-700: #8a2f2f;
+  --color-red-900: #2a0f0f;
 }
 
-body {
+/* Runtime-adjustable knobs; src/theme.ts writes these from the user's settings. */
+:root {
+  --accent: #ffffff;
+  --accent-fg: #000000;
+  --bg: #000000;
+  --fg: #e8e8e8;
+  --panel: color-mix(in srgb, var(--fg) 4%, var(--bg));
+  --wallpaper-dim: 0.7;
+  --wallpaper-blur: 0px;
+}
+
+html {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--bg);
+}
+
+html,
+body,
+#root {
+  height: 100%;
   margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #000000;
-  background-image: url("/lain.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: #e2e8f0;
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* Make all slate-800 panels semi-transparent so Lain shows through */
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--fg) 16%, var(--bg));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--fg) 26%, var(--bg));
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Hairline edges on every panel so black-on-black surfaces still read as cards. */
 .bg-slate-800 {
-  background-color: rgb(0 0 0 / 0.75) !important;
-  backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--fg) 8%, transparent);
+}
+
+/* Wallpaper layer: sits behind everything, dimmed and blurred per settings. */
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  filter: blur(var(--wallpaper-blur));
+  transform: scale(1.04);
+  pointer-events: none;
+}
+.wallpaper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / var(--wallpaper-dim));
+}
+
+/* With a wallpaper, panels and chrome go translucent so the picture shows through. */
+.has-wallpaper {
+  --panel: color-mix(in srgb, var(--bg) 72%, transparent);
+}
+.has-wallpaper .bg-slate-800 {
+  backdrop-filter: blur(14px);
+}
+.has-wallpaper header,
+.has-wallpaper nav {
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+input[type="range"] {
+  accent-color: var(--accent);
+}
+
+/* Gold level badge in the header, RPG style. Fixed colours on purpose: it should
+   read as gold regardless of the user's accent or background. */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.6rem 0.2rem 0.5rem;
+  border-radius: 0.4rem;
+  background: linear-gradient(180deg, #ffe08a 0%, #f2b93b 45%, #d8961c 100%);
+  border: 1px solid #b57a12;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.55),
+    inset 0 -1px 0 rgb(0 0 0 / 0.2),
+    0 0 10px rgb(242 185 59 / 0.35);
+  color: #2a1b00;
+  font-size: 0.72rem;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
+}
+.level-badge-num {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.level-badge-title {
+  font-weight: 600;
+  opacity: 0.85;
+  padding-left: 0.4rem;
+  border-left: 1px solid rgb(90 55 0 / 0.35);
 }

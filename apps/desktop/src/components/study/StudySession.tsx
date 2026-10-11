@@ -90,7 +90,7 @@ export function StudySession() {
         <button
           onClick={() => startSession(dueCardIds)}
           disabled={!hasDueCards}
-          className="px-6 py-2 bg-indigo-600 rounded-lg hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-2 bg-indigo-600 text-accent-fg rounded-lg hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {hasDueCards ? `Review ${dueCardIds.length} More` : "All Caught Up!"}
         </button>
@@ -138,7 +138,7 @@ export function StudySession() {
           </p>
           <button
             onClick={() => startSession(dueCardIds)}
-            className="px-6 py-3 bg-indigo-600 rounded-lg hover:bg-indigo-500 font-semibold transition-colors"
+            className="px-6 py-3 bg-indigo-600 text-accent-fg rounded-lg hover:bg-indigo-500 font-semibold transition-colors"
           >
             Start Review ({dueCardIds.length} cards)
           </button>
@@ -158,7 +158,7 @@ export function StudySession() {
           <button
             onClick={handleGenerate}
             disabled={generating}
-            className="px-6 py-3 bg-indigo-600 rounded-lg hover:bg-indigo-500 transition-colors disabled:opacity-50 font-semibold"
+            className="px-6 py-3 bg-indigo-600 text-accent-fg rounded-lg hover:bg-indigo-500 transition-colors disabled:opacity-50 font-semibold"
           >
             {generating
               ? "Generating..."

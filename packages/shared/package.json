@@ -25,6 +25,10 @@
     "./data": {
       "import": "./src/data/index.ts",
       "default": "./dist/data/index.js"
+    },
+    "./plan": {
+      "import": "./src/plan/index.ts",
+      "default": "./dist/plan/index.js"
     }
   },
   "scripts": {

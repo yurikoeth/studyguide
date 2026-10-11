@@ -4,6 +4,7 @@ import { DOMAINS_220_1201 } from "@comptia-study/shared/data";
 import { generateQuestions } from "@comptia-study/shared/ai";
 import { useStudyStore } from "../../stores/study-store";
 import { useUserStore } from "../../stores/user-store";
+import { ArrowRightIcon, CloseIcon, PlayIcon, SparklesIcon } from "../icons";
 
 interface Props {
   video: Video;
@@ -55,8 +56,8 @@ export function VideoCard({ video }: Props) {
           onClick={() => toggleVideoWatched(video.id)}
           className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0 ${
             isWatched
-              ? "bg-green-500 border-green-500 text-white"
-              : "border-slate-500 hover:border-green-400"
+              ? "bg-indigo-600 border-indigo-600 text-accent-fg"
+              : "border-slate-500 hover:border-indigo-400"
           }`}
         >
           {isWatched && <span className="text-xs">✓</span>}
@@ -81,29 +82,32 @@ export function VideoCard({ video }: Props) {
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() => setShowEmbed(!showEmbed)}
-            className={`text-xs px-2 py-1 rounded transition-colors ${
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border transition-colors ${
               showEmbed
-                ? "bg-red-600/40 text-red-300"
-                : "bg-red-600/20 text-red-400 hover:bg-red-600/30"
+                ? "bg-indigo-600 text-accent-fg border-indigo-600"
+                : "border-white/15 text-slate-200 hover:border-white/40 hover:bg-white/5"
             }`}
           >
-            {showEmbed ? "✕ Close" : "▶ Watch"}
+            {showEmbed ? <CloseIcon className="w-3.5 h-3.5" /> : <PlayIcon className="w-3.5 h-3.5" />}
+            {showEmbed ? "Close" : "Watch"}
           </button>
           {isWatched && (
             <button
               onClick={handleGenerateForVideo}
               disabled={generating}
-              className="text-xs px-2 py-1 bg-emerald-600/20 text-emerald-400 rounded hover:bg-emerald-600/30 transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border border-white/15 text-slate-200 hover:border-white/40 hover:bg-white/5 transition-colors disabled:opacity-50"
             >
-              {generating ? "Generating..." : questionCount > 0 ? "+ More Q's" : "Generate Q's"}
+              <SparklesIcon className="w-3.5 h-3.5" />
+              {generating ? "Generating…" : questionCount > 0 ? "More questions" : "Generate questions"}
             </button>
           )}
           {isWatched && questionCount > 0 && (
             <button
               onClick={() => setActiveTab("study")}
-              className="text-xs px-2 py-1 bg-indigo-600/20 text-indigo-400 rounded hover:bg-indigo-600/30 transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md bg-indigo-600 text-accent-fg hover:bg-indigo-500 transition-colors"
             >
               Study
+              <ArrowRightIcon className="w-3.5 h-3.5" />
             </button>
           )}
         </div>

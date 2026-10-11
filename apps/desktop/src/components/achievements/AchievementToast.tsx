@@ -1,3 +1,4 @@
+import { TrophyIcon } from "../icons";
 import { useEffect, useState } from "react";
 import type { Achievement } from "@comptia-study/shared/types";
 
@@ -29,7 +30,7 @@ export function AchievementToast({ achievement, onDismiss }: Props) {
           Achievement Unlocked!
         </p>
         <div className="flex items-center gap-3 mt-2">
-          <span className="text-3xl">🏆</span>
+          <TrophyIcon className="w-8 h-8 text-white" />
           <div>
             <p className="font-bold">{achievement.name}</p>
             <p className="text-sm text-slate-400">{achievement.description}</p>

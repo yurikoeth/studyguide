@@ -2,9 +2,9 @@
   "name": "comptia-study",
   "private": true,
   "scripts": {
-    "dev:desktop": "turbo run dev --filter=@comptia-study/desktop",
-    "dev:web": "turbo run dev --filter=@comptia-study/web",
+    "dev": "pnpm --filter @comptia-study/desktop tauri dev",
     "build": "turbo run build",
+    "build:app": "pnpm --filter @comptia-study/desktop tauri build",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck"
   },

@@ -1,3 +1,4 @@
+import { TrophyIcon, LockIcon } from "../icons";
 import { ACHIEVEMENTS } from "@comptia-study/shared/gamification";
 import { useUserStore } from "../../stores/user-store";
 
@@ -45,7 +46,7 @@ export function AchievementList() {
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">
-                        {isUnlocked ? "🏆" : "🔒"}
+                        {isUnlocked ? <TrophyIcon className="w-6 h-6" /> : <LockIcon className="w-6 h-6" />}
                       </span>
                       <div>
                         <p className="font-semibold text-sm">{achievement.name}</p>
